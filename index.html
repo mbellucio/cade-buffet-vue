@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <title>Cadê Buffet</title>
+  </head>
+  <body>
+    <div id="app" class="">
+
+      <div class="container-fuid">
+        <nav class="container-fluid bg-dark p-2">
+          <div class="container text-center">
+            <input v-model="searchText" type="text" class="col-2" placeholder="Pesquise por Buffets aqui">
+          </div>
+        </nav>
+        
+        <div class="text-center mt-3">
+          <h2>Bem vindo ao Cadê Buffet!</h2>
+        </div>
+        
+        
+        <div v-if="screen === 'buffets'" class="container mt-5">
+          <ul>
+            <div class="col-2 shadow rounded p-4 m-3 text-center" v-for="buffet, index in listResult">
+              <h4>{{buffet.buffet_name}}</h4>
+              <p>{{buffet.city}}, {{buffet.state_code}}</p>
+              <hr>
+              <button v-on:click="getCurrentBuffet(buffet.id)" class="btn btn-dark">Ver detalhes</button>
+            </div>
+          </ul>
+        </div>
+
+        <div v-if="screen === 'buffet-details'" class="container mt-5 d-flex justify-content-center">
+          <div class="col-8 shadow rounded p-5 m-3">
+            <h2 class="bg-dark text-light text-center rounded py-2">{{current_buffet.buffet_name}}</h2>
+            <hr>
+            <p><strong>Descrição: </strong></p>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+      
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
