@@ -9,20 +9,33 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="styles.css">
     <title>Cadê Buffet</title>
   </head>
   <body>
     <div id="app" class="">
-
+      
+      <div v-if="modal" id="modal-backdrop">
+        <div id="modal" class="rounded shadow bg-light">
+          <div class="container-fluid bg-dark text-light py-2 rounded"><h4>Checagem de disponibilidade</h4></div>
+          <hr>
+          <div class="p-4 text-center">
+            <p>{{checkFeedback}}</p>
+            <button v-on:click="closeModal" class="btn btn-dark col-4">OK</button>
+          </div>
+        </div>
+      </div>
+      
       <div class="container-fuid">
         <nav class="container-fluid bg-dark p-2">
-          <div class="container text-center">
-            <input v-model="searchText" type="text" class="col-2" placeholder="Pesquise por Buffets aqui">
+          <div class="container text-center w-25">
+            <input v-if="screen === 'buffets'" v-model="searchText" type="text" class="col-2 form-control" placeholder="Pesquise por Buffets aqui">
+            <h2 v-if="screen === 'buffet-details'" class="text-light">Cadê Buffet</h2>
           </div>
         </nav>
         
         <div class="text-center mt-3">
-          <h2>Bem vindo ao Cadê Buffet!</h2>
+          <h2 v-if="screen === 'buffets'">Bem vindo ao Cadê Buffet!</h2>
         </div>
         
         
@@ -38,18 +51,55 @@
         </div>
 
         <div v-if="screen === 'buffet-details'" class="container mt-5 d-flex justify-content-center">
-          <div class="col-8 shadow rounded p-5 m-3">
-            <h2 class="bg-dark text-light text-center rounded py-2">{{current_buffet.buffet_name}}</h2>
-            <hr>
-            <p><strong>Descrição: </strong></p>
+          <div class="my-3">
+            <button v-on:click="backToBuffets()" class="btn btn-dark">Voltar</button>
+          </div>
+          <div class="col-10">
+            
+            <div class="shadow rounded p-5 m-3">
+              <h2 class="bg-dark text-light text-center rounded py-2">{{current_buffet.buffet_name}}</h2>
+              <hr>
+              <p><strong>Descrição: </strong>{{current_buffet.description}}</p>
+              <p><strong>Email: </strong>{{current_buffet.email}}</p>
+              <p><strong>Tel: </strong>{{current_buffet.phone_number}}</p>
+              <p><strong>Endereço: </strong>{{current_buffet.adress}}</p>
+              <p><strong>CEP: </strong>{{current_buffet.zip_code}}</p>
+              <p><strong>Bairro: </strong>{{current_buffet.neighborhood}}</p>
+              <p><strong>Cidade: </strong>{{current_buffet.city}}</p>
+              <p><strong>Estado: </strong>{{current_buffet.state_code}}</p>
+              <strong>Métodos de pagamento aceitos:</strong>
+              <ul>
+                <li v-for="payment_method in current_buffet.payment_methods">
+                  {{payment_method.method}}
+                </li>
+              </ul>
+            </div>
+
+            <div class="row shadow rounded p-5 m-3">
+              <h3 class="text-center">Eventos disponíveis</h3>
+              <hr>
+              <div v-for="event in current_buffet.events" class="col-5 rounded shadow p-4 mb-3 mx-4">
+                <h4>{{event.name}}</h4>
+                <hr>
+                <p>{{event.description}}</p>
+                <p>Duração padrão do evento: {{event.standard_duration}}</p>
+                <p>Máximo de convidados: {{event.max_quorum}}</p>
+                <p>Atende no endereço do cliente: {{event.flexible_location ? "Sim" : "Não"}}</p>
+                <hr>
+                <h5>Checar disponibilidade</h5>
+                <div>
+                  <label for="date" class="form-label">Data</label>
+                  <input type="date" id="date" class="form-control">
+                  <label for="guestNumber" class="form-label">Número de convidados</label>
+                  <input type="number" id="guesNumber" class="form-control">
+                  <button class="btn btn-dark mt-2 col-5">Checar</button>
+                </div>
+            </div>
           </div>
         </div>
 
-
       </div>
     </div>
-      
-
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="app.js"></script>

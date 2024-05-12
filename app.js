@@ -7,6 +7,8 @@ const app = Vue.createApp({
       searchText: "",
       screen: "buffets",
       current_buffet: {},
+      modal: true,
+      checkFeedback: ""
     };
   },
 
@@ -37,9 +39,16 @@ const app = Vue.createApp({
 
     async getCurrentBuffet(id) {
       this.screen = "buffet-details";
-      response = await fetch(`${apiURL}/api/v1/buffets/${id}/`);
-      data = await response.json();
-      this.current_buffet = data;
+      responseBuffet = await fetch(`${apiURL}/api/v1/buffets/${id}/`);
+      responseEvents = await fetch(`${apiURL}/api/v1/buffets/${id}/events/`);
+      buffetData = await responseBuffet.json();
+      eventsData = await responseEvents.json();
+      this.current_buffet = buffetData;
+      this.current_buffet.events = eventsData;
+    },
+
+    backToBuffets() {
+      this.screen = "buffets";
     },
   },
 });
