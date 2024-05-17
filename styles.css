@@ -34,3 +34,12 @@
   background-color: white;
   color: black;
 }
+
+.star-rating {
+  display: flex;
+  direction: row;
+  font-size: 2rem;
+  position: relative;
+  width: 5rem;
+  height: 1rem;
+}
