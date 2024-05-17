@@ -41,7 +41,7 @@ const app = Vue.createApp({
 
   methods: {
     async getBuffets() {
-      response = await fetch(`${apiURL}/api/v1/buffets/`);
+      let response = await fetch(`${apiURL}/api/v1/buffets/`);
       data = await response.json();
       this.buffets = data;
     },

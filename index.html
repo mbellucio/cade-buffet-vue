@@ -13,7 +13,7 @@
     <title>Cadê Buffet</title>
   </head>
   <body>
-    <div id="app" class="">
+    <div id="app">
       
       <div v-if="modal" id="modal-backdrop">
         <div id="modal" class="rounded shadow bg-light col-3">
@@ -38,16 +38,13 @@
           <h2 v-if="screen === 'buffets'">Bem vindo ao Cadê Buffet!</h2>
         </div>
         
-        
-        <div v-if="screen === 'buffets'" class="container mt-5">
-          <ul>
-            <div class="col-2 shadow rounded p-4 m-3 text-center" v-for="buffet, index in listResult">
-              <h4>{{buffet.buffet_name}}</h4>
-              <p>{{buffet.city}}, {{buffet.state_code}}</p>
-              <hr>
-              <button v-on:click="getCurrentBuffet(buffet.id)" class="btn btn-dark">Ver detalhes</button>
-            </div>
-          </ul>
+        <div v-if="screen === 'buffets'" class="container d-flex justify-content-center">
+          <div class="col-3 shadow rounded p-4 m-3 text-center box" v-for="buffet, index in listResult">
+            <h4>{{buffet.buffet_name}}</h4>
+            <p>{{buffet.city}}, {{buffet.state_code}}</p>
+            <hr>
+            <button v-on:click="getCurrentBuffet(buffet.id)" class="btn btn-dark btn-index">Ver detalhes</button>
+          </div>
         </div>
 
         <div v-if="screen === 'buffet-details'" class="container mt-5 d-flex justify-content-center">
@@ -75,16 +72,20 @@
               </ul>
             </div>
 
-            <div class="row shadow rounded p-5 m-3">
+            <div class="container row shadow rounded p-5 m-3">
               <h3 class="text-center">Eventos disponíveis</h3>
               <hr>
               <div v-for="event, index in current_buffet.events" class="col-5 rounded shadow p-4 mb-3 mx-4">
                 <h4>{{event.name}}</h4>
                 <hr>
-                <p>{{event.description}}</p>
-                <p>Duração padrão do evento: {{event.standard_duration}} min</p>
-                <p>Máximo de convidados: {{event.max_quorum}}</p>
-                <p>Atende no endereço do cliente: {{event.flexible_location ? "Sim" : "Não"}}</p>
+                <h5>Descrição do evento</h5>
+                <div class="overflow-y-scroll overflow-hidden" style="height: 300px">
+                  <p>{{event.description}}</p>
+                </div>
+                <hr>
+                <p><strong>Duração padrão do evento:</strong> {{event.standard_duration}} min</p>
+                <p><strong>Máximo de convidados:</strong> {{event.max_quorum}}</p>
+                <p><strong>Atende no endereço do cliente:</strong>{{event.flexible_location ? "Sim" : "Não"}}</p>
                 <hr>
                 <h5>Checar disponibilidade</h5>
                 <div>
